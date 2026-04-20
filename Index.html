@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="DeGods — A global community of people that do shit. 10,000 unique NFTs on Solana."/>
+<title>DeGods — Do Everything Great or Die</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════
+   RESET & VARIABLES
+══════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg:       #f4f2ed;
+  --black:    #0f0f0e;
+  --red:      #cc1f0a;
+  --muted:    #8a8880;
+  --border:   #dbd8d0;
+  --white:    #ffffff;
+  --card-bg:  #eceae4;
+  --font-mono: 'DM Mono', monospace;
+  --font-ser:  'Instrument Serif', serif;
+  --nav-h:    56px;
+}
+
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { display:block; max-width:100%; }
+a   { color:inherit; }
+button { font-family:var(--font-mono); }
+
+/* ══════════════════════════════════════════
+   UTILITY
+══════════════════════════════════════════ */
+.label {
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.label::before {
+  content:'';
+  display:inline-block;
+  width:18px; height:1px;
+  background:var(--muted);
+  flex-shrink:0;
+}
+.serif { font-family:var(--font-ser); font-style:italic; font-weight:400; }
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 13px 32px;
+  border: 1px solid var(--black);
+  background: var(--black);
+  color: var(--bg);
+  cursor: pointer;
+  transition: background .18s, color .18s, border-color .18s;
+  -webkit-appearance:none;
+}
+.btn:hover { background: var(--red); border-color:var(--red); color:#fff; }
+.btn-ghost {
+  background: transparent;
+  color: var(--black);
+}
+.btn-ghost:hover { background:var(--black); color:var(--bg); }
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top:0; left:0; right:0;
+  height: var(--nav-h);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 300;
+  display: flex;
+  align-items: stretch;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  border-right: 1px solid var(--border);
+  text-decoration:none;
+  gap: 10px;
+  flex-shrink:0;
+}
+.nav-brand-text {
+  font-family: var(--font-ser);
+  font-style:italic;
+  font-size: 22px;
+  color: var(--black);
+}
+.nav-brand-tag {
+  font-size:9px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding-top:2px;
+}
+.nav-links {
+  display:flex;
+  align-items:stretch;
+  list-style:none;
+}
+.nav-links li a {
+  display:flex; align-items:center;
+  padding: 0 22px;
+  font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  text-decoration:none; color:var(--muted);
+  border-right: 1px solid var(--border);
+  transition:color .15s;
+  white-space:nowrap;
+}
+.nav-links li a:hover { color:var(--black); }
+.nav-right {
+  margin-left:auto;
+  display:flex; align-items:stretch;
+}
+.nav-right a {
+  display:flex; align-items:center;
+  padding:0 22px;
+  font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  text-decoration:none; color:var(--muted);
+  border-left: 1px solid var(--border);
+  transition:color .15s, background .15s;
+  white-space:nowrap;
+}
+.nav-right a:hover { color:var(--black); }
+.nav-right a.nav-cta {
+  background:var(--black); color:var(--bg);
+  padding:0 28px;
+}
+.nav-right a.nav-cta:hover { background:var(--red); }
+
+/* hamburger */
+.nav-burger {
+  display:none;
+  flex-direction:column; justify-content:center; gap:5px;
+  padding:0 20px;
+  border:none; background:none; cursor:pointer;
+  margin-left:auto;
+}
+.nav-burger span {
+  display:block; width:22px; height:1.5px;
+  background:var(--black);
+  transition:transform .25s, opacity .25s;
+}
+.nav-burger.open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2){ opacity:0; }
+.nav-burger.open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  display:none;
+  position:fixed; top:var(--nav-h); left:0; right:0;
+  background:var(--bg); border-bottom:1px solid var(--border);
+  z-index:299; flex-direction:column;
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu a {
+  display:block; padding:16px 28px;
+  font-size:13px; letter-spacing:.06em; text-transform:uppercase;
+  text-decoration:none; color:var(--muted);
+  border-bottom:1px solid var(--border);
+  transition:color .15s;
+}
+.mobile-menu a:hover { color:var(--black); }
+.mobile-menu a.mm-cta { background:var(--black); color:var(--bg); }
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero {
+  margin-top: var(--nav-h);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height: calc(100svh - var(--nav-h));
+  border-bottom:1px solid var(--border);
+}
+
+.hero-left {
+  padding: 64px 52px;
+  display:flex; flex-direction:column; justify-content:space-between;
+  border-right:1px solid var(--border);
+}
+.hero-top { }
+.hero-label { margin-bottom:28px; }
+.hero-title {
+  font-family: var(--font-ser);
+  font-size: clamp(72px, 10vw, 140px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: .9;
+  letter-spacing: -.02em;
+  color: var(--black);
+  margin-bottom:32px;
+}
+.hero-title .accent { color:var(--red); }
+.hero-body {
+  font-size:15px;
+  color:#555;
+  line-height:1.85;
+  max-width:400px;
+  margin-bottom:40px;
+}
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+
+.hero-bottom {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:0;
+  border-top:1px solid var(--border);
+  margin:0 -52px -64px;
+}
+.hero-stat {
+  padding:24px 28px;
+  border-right:1px solid var(--border);
+}
+.hero-stat:last-child { border-right:none; }
+.hero-stat-num {
+  font-family:var(--font-ser);
+  font-style:italic;
+  font-size:32px;
+  color:var(--black);
+  display:block;
+  line-height:1;
+  margin-bottom:4px;
+}
+.hero-stat-label { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+
+/* hero right — NFT mosaic */
+.hero-right {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: repeat(3,1fr);
+  gap:2px;
+  background:var(--border);
+  overflow:hidden;
+}
+.hero-nft {
+  overflow:hidden;
+  position:relative;
+  background:var(--card-bg);
+}
+.hero-nft img {
+  width:100%; height:100%;
+  object-fit:cover;
+  transition:transform .5s cubic-bezier(.25,.46,.45,.94), filter .4s;
+  filter:grayscale(15%);
+}
+.hero-nft:hover img { transform:scale(1.06); filter:grayscale(0%); }
+.hero-nft-id {
+  position:absolute; bottom:6px; left:8px;
+  font-size:9px; letter-spacing:.04em;
+  color:rgba(255,255,255,.5);
+}
+/* span first nft 2x2 */
+.hero-nft:first-child {
+  grid-column:1/3;
+  grid-row:1/3;
+}
+
+/* ══════════════════════════════════════════
+   MARQUEE
+══════════════════════════════════════════ */
+.marquee-wrap {
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+  background:var(--black);
+  padding:13px 0;
+}
+.marquee-track {
+  display:flex;
+  white-space:nowrap;
+  animation:marquee 22s linear infinite;
+  will-change:transform;
+}
+.marquee-track span {
+  font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  padding:0 28px;
+  flex-shrink:0;
+}
+.marquee-track span.hi { color:var(--bg); }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ══════════════════════════════════════════
+   SECTION SHELL
+══════════════════════════════════════════ */
+.section {
+  padding:88px 52px;
+  border-bottom:1px solid var(--border);
+}
+.section-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-bottom:48px;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.section-title {
+  font-family:var(--font-ser);
+  font-style:italic;
+  font-size: clamp(40px,6vw,80px);
+  font-weight:400;
+  line-height:.95;
+  color:var(--black);
+  margin-top:14px;
+}
+.section-link {
+  font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  text-decoration:none; color:var(--muted);
+  border-bottom:1px solid var(--border);
+  padding-bottom:2px;
+  white-space:nowrap;
+  transition:color .15s, border-color .15s;
+  flex-shrink:0;
+}
+.section-link:hover { color:var(--black); border-color:var(--black); }
+
+/* ══════════════════════════════════════════
+   NFT STRIP (scrolling)
+══════════════════════════════════════════ */
+.strip-wrap {
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.strip-track {
+  display:flex;
+  gap:2px;
+  animation:strip-scroll 35s linear infinite;
+  will-change:transform;
+  width:max-content;
+}
+.strip-track:hover { animation-play-state:paused; }
+.strip-item {
+  width:clamp(120px,14vw,180px);
+  aspect-ratio:1/1;
+  overflow:hidden;
+  flex-shrink:0;
+  background:var(--card-bg);
+  position:relative;
+  cursor:pointer;
+}
+.strip-item img {
+  width:100%; height:100%;
+  object-fit:cover;
+  filter:grayscale(20%);
+  transition:filter .3s, transform .4s;
+}
+.strip-item:hover img { filter:grayscale(0%); transform:scale(1.06); }
+@keyframes strip-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ══════════════════════════════════════════
+   NFT GRID
+══════════════════════════════════════════ */
+.nft-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  gap:2px;
+  background:var(--border);
+}
+.nft-card {
+  background:var(--bg);
+  cursor:pointer;
+  transition:background .15s;
+}
+.nft-card:hover { background:var(--white); }
+.nft-img-wrap {
+  position:relative;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  background:var(--card-bg);
+}
+.nft-img-wrap img {
+  width:100%; height:100%;
+  object-fit:cover;
+  transition:transform .5s cubic-bezier(.25,.46,.45,.94), filter .3s;
+  filter:grayscale(12%);
+}
+.nft-card:hover .nft-img-wrap img { transform:scale(1.05); filter:grayscale(0%); }
+.nft-badge {
+  position:absolute; top:10px; right:10px;
+  font-size:9px; letter-spacing:.06em; text-transform:uppercase;
+  padding:3px 9px;
+  background:var(--black); color:var(--bg);
+}
+.nft-badge.rare { background:var(--red); }
+.nft-id-tag {
+  position:absolute; bottom:8px; left:10px;
+  font-size:9px; letter-spacing:.04em;
+  color:rgba(255,255,255,.45);
+}
+/* skeleton */
+.nft-skel {
+  position:absolute; inset:0;
+  background:linear-gradient(90deg,var(--card-bg) 25%,#e6e3db 50%,var(--card-bg) 75%);
+  background-size:200% 100%;
+  animation:skel 1.5s infinite;
+}
+@keyframes skel { to{background-position:-200% 0;} }
+
+.nft-body {
+  padding:14px 16px 16px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.nft-meta { font-size:10px; color:var(--muted); letter-spacing:.04em; }
+.nft-name {
+  font-family:var(--font-ser);
+  font-style:italic;
+  font-size:18px;
+  line-height:1.1;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.nft-footer {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:4px;
+}
+.nft-price { font-size:14px; font-weight:500; letter-spacing:.02em; }
+.nft-price small { font-size:10px; color:var(--muted); margin-left:3px; }
+.nft-buy-btn {
+  font-size:9px; letter-spacing:.08em; text-transform:uppercase;
+  padding:6px 14px; border:1px solid var(--border);
+  background:transparent; color:var(--muted); cursor:pointer;
+  opacity:0; transition:opacity .15s, background .15s, color .15s, border-color .15s;
+}
+.nft-card:hover .nft-buy-btn { opacity:1; }
+.nft-buy-btn:hover { background:var(--black); color:var(--bg); border-color:var(--black); }
+
+/* ══════════════════════════════════════════
+   MANIFESTO
+══════════════════════════════════════════ */
+.manifesto {
+  background:var(--white);
+  padding:100px 52px;
+  border-bottom:1px solid var(--border);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:center;
+}
+.manifesto-text { }
+.manifesto-quote {
+  font-family:var(--font-ser);
+  font-style:italic;
+  font-size:clamp(28px,4.5vw,56px);
+  line-height:1.2;
+  color:var(--black);
+  margin:20px 0 36px;
+  font-weight:400;
+}
+.manifesto-body {
+  font-size:14px; color:#555; line-height:1.9;
+  max-width:440px;
+}
+.manifesto-body p+p { margin-top:16px; }
+.manifesto-body strong { color:var(--black); }
+.manifesto-actions { display:flex; gap:14px; flex-wrap:wrap; margin-top:40px; }
+
+.manifesto-img-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+  background:var(--border);
+}
+.manifesto-img-cell {
+  overflow:hidden; aspect-ratio:1/1;
+  background:var(--card-bg);
+}
+.manifesto-img-cell img {
+  width:100%; height:100%;
+  object-fit:cover;
+  transition:transform .5s, filter .3s;
+  filter:grayscale(10%);
+}
+.manifesto-img-cell:hover img { transform:scale(1.06); filter:grayscale(0%); }
+
+/* ══════════════════════════════════════════
+   TOKEN SECTION
+══════════════════════════════════════════ */
+.token-section {
+  padding:88px 52px;
+  border-bottom:1px solid var(--border);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:start;
+}
+.token-ticker {
+  font-family:var(--font-ser);
+  font-style:italic;
+  font-size:clamp(60px,9vw,120px);
+  color:var(--black);
+  line-height:.9;
+  margin:16px 0 24px;
+}
+.token-desc { font-size:14px; color:#555; line-height:1.9; max-width:400px; }
+.token-actions { margin-top:36px; display:flex; gap:14px; flex-wrap:wrap; }
+.token-ca-label { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:32px; margin-bottom:8px; }
+.token-ca {
+  font-size:12px; color:var(--black); word-break:break-all;
+  padding:14px 18px; border:1px solid var(--border); background:var(--card-bg);
+  cursor:copy; letter-spacing:.03em; position:relative;
+  transition:border-color .15s;
+}
+.token-ca:hover { border-color:var(--black); }
+.token-ca-hint { display:block; font-size:9px; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin-top:4px; }
+
+.token-features { display:flex; flex-direction:column; gap:0; }
+.token-feat {
+  display:grid; grid-template-columns:50px 1fr;
+  gap:20px; padding:24px 0; border-bottom:1px solid var(--border);
+  align-items:start;
+}
+.token-feat:first-child { border-top:1px solid var(--border); }
+.feat-num {
+  font-family:var(--font-ser);
+  font-style:italic; font-size:36px; color:var(--muted); line-height:1;
+}
+.feat-title { font-size:13px; font-weight:500; margin-bottom:4px; }
+.feat-body { font-size:12px; color:#666; line-height:1.7; }
+
+/* ══════════════════════════════════════════
+   COMMUNITY / CTA
+══════════════════════════════════════════ */
+.community {
+  padding:100px 52px;
+  border-bottom:1px solid var(--border);
+  text-align:center;
+  background:var(--black);
+}
+.community .label { justify-content:center; color:rgba(255,255,255,.3); }
+.community .label::before { background:rgba(255,255,255,.2); }
+.community-title {
+  font-family:var(--font-ser);
+  font-style:italic;
+  font-size:clamp(52px,9vw,120px);
+  color:var(--bg);
+  line-height:.9;
+  margin:20px 0 28px;
+  font-weight:400;
+}
+.community-sub { font-size:13px; color:rgba(255,255,255,.4); letter-spacing:.06em; text-transform:uppercase; margin-bottom:44px; }
+.community-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.community-btns .btn { border-color:rgba(255,255,255,.2); background:rgba(255,255,255,.08); color:var(--bg); }
+.community-btns .btn:hover { background:var(--red); border-color:var(--red); }
+.community-btns .btn.solid { background:var(--bg); color:var(--black); border-color:var(--bg); }
+.community-btns .btn.solid:hover { background:var(--red); color:#fff; border-color:var(--red); }
+
+/* ══════════════════════════════════════════
+   PRESS / AS SEEN IN
+══════════════════════════════════════════ */
+.press {
+  padding:52px;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:0;
+  overflow-x:auto;
+}
+.press-label { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); white-space:nowrap; margin-right:40px; padding-right:40px; border-right:1px solid var(--border); flex-shrink:0; }
+.press-logos { display:flex; gap:40px; align-items:center; flex-wrap:wrap; }
+.press-item { font-family:var(--font-ser); font-style:italic; font-size:20px; color:var(--muted); white-space:nowrap; transition:color .15s; }
+.press-item:hover { color:var(--black); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  padding:60px 52px 36px;
+  border-top:1px solid var(--border);
+}
+.footer-top {
+  display:grid;
+  grid-template-columns:200px 1fr;
+  gap:80px;
+  padding-bottom:52px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:28px;
+}
+.footer-brand-name {
+  font-family:var(--font-ser);
+  font-style:italic;
+  font-size:32px; color:var(--black);
+  margin-bottom:8px;
+}
+.footer-brand-tag { font-size:11px; color:var(--muted); letter-spacing:.06em; line-height:1.7; }
+.footer-cols {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:40px;
+}
+.footer-col h4 { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:18px; }
+.footer-col a {
+  display:block; font-size:12px; color:#777; text-decoration:none;
+  margin-bottom:10px; transition:color .15s; letter-spacing:.02em;
+}
+.footer-col a:hover { color:var(--black); }
+.footer-bottom {
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+}
+.footer-copy { font-size:10px; letter-spacing:.04em; color:var(--muted); }
+.footer-socials { display:flex; gap:18px; }
+.footer-socials a { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .15s; }
+.footer-socials a:hover { color:var(--black); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — TABLET
+══════════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero { grid-template-columns:1fr; min-height:auto; }
+  .hero-left { border-right:none; border-bottom:1px solid var(--border); padding:52px 32px 0; }
+  .hero-bottom { margin:0 -32px 0; }
+  .hero-right { min-height:60vw; }
+  .manifesto { grid-template-columns:1fr; gap:48px; }
+  .manifesto-img-grid { max-width:480px; }
+  .token-section { grid-template-columns:1fr; gap:48px; }
+  .footer-top { grid-template-columns:1fr; gap:40px; }
+  .footer-cols { grid-template-columns:repeat(2,1fr); }
+  .section { padding:64px 32px; }
+  .press { padding:36px 32px; }
+  footer { padding:48px 32px 28px; }
+  .community { padding:80px 32px; }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — MOBILE
+══════════════════════════════════════════ */
+@media(max-width:700px){
+  :root { --nav-h:52px; }
+
+  /* nav */
+  .nav-links, .nav-right { display:none; }
+  .nav-burger { display:flex; }
+  .nav-brand-tag { display:none; }
+
+  /* hero */
+  .hero-left { padding:40px 20px 0; }
+  .hero-bottom { margin:0 -20px 0; }
+  .hero-stat { padding:18px 16px; }
+  .hero-stat-num { font-size:24px; }
+  .hero-right { min-height:85vw; }
+  /* simplify hero grid on mobile */
+  .hero-right { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+  .hero-nft:first-child { grid-column:1/3; grid-row:auto; }
+  .hero-actions { flex-direction:column; }
+  .hero-actions .btn { text-align:center; width:100%; }
+
+  /* sections */
+  .section { padding:52px 20px; }
+  .section-head { flex-direction:column; align-items:flex-start; gap:12px; }
+
+  /* nft grid */
+  .nft-grid { grid-template-columns:repeat(2,1fr); }
+
+  /* manifesto */
+  .manifesto { padding:60px 20px; gap:36px; }
+  .manifesto-img-grid { grid-template-columns:repeat(2,1fr); }
+
+  /* token */
+  .token-section { padding:60px 20px; gap:36px; }
+
+  /* community */
+  .community { padding:64px 20px; }
+  .community-btns { flex-direction:column; }
+  .community-btns .btn { width:100%; text-align:center; }
+
+  /* press */
+  .press { padding:28px 20px; flex-direction:column; align-items:flex-start; }
+  .press-label { border-right:none; padding-right:0; margin-right:0; margin-bottom:18px; }
+  .press-logos { gap:20px; }
+
+  /* footer */
+  footer { padding:40px 20px 24px; }
+  .footer-top { gap:28px; }
+  .footer-cols { grid-template-columns:1fr 1fr; gap:28px; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; gap:10px; }
+
+  /* strip */
+  .strip-item { width:28vw; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-brand" href="#">
+    <span class="nav-brand-text">DeGods</span>
+    <span class="nav-brand-tag">Est. 2021</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#manifesto">About</a></li>
+    <li><a href="#token">$DEGOD</a></li>
+    <li><a href="#community">Community</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://x.com/DeGodsNFT" target="_blank">Twitter</a>
+    <a href="https://discord.gg/degods" target="_blank">Discord</a>
+    <a href="https://magiceden.us/marketplace/degods" target="_blank" class="nav-cta">Buy NFT</a>
+  </div>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#collection" onclick="closeMM()">Collection</a>
+  <a href="#manifesto" onclick="closeMM()">About</a>
+  <a href="#token" onclick="closeMM()">$DEGOD</a>
+  <a href="#community" onclick="closeMM()">Community</a>
+  <a href="https://x.com/DeGodsNFT" target="_blank">Twitter</a>
+  <a href="https://discord.gg/degods" target="_blank">Discord</a>
+  <a href="https://magiceden.us/marketplace/degods" target="_blank" class="mm-cta">Buy NFT</a>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-top">
+      <p class="label hero-label">10,000 unique NFTs · Solana · Los Angeles 2021</p>
+      <h1 class="hero-title">De<span class="accent">Gods</span></h1>
+      <p class="hero-body">A global community of creators, builders, entrepreneurs, athletes, and people that do shit. Do Everything Great or Die.</p>
+      <div class="hero-actions">
+        <a href="https://magiceden.us/marketplace/degods" target="_blank" class="btn">Buy on Magic Eden</a>
+        <a href="#collection" class="btn btn-ghost">View Collection</a>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-stat">
+        <span class="hero-stat-num">10K</span>
+        <span class="hero-stat-label">NFTs</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">2.3M</span>
+        <span class="hero-stat-label">SOL Volume</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">$220K</span>
+        <span class="hero-stat-label">Top Sale</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right" id="heroGrid"></div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee"></div>
+</div>
+
+<!-- ── NFT STRIP ── -->
+<div class="strip-wrap">
+  <div class="strip-track" id="stripTrack"></div>
+</div>
+
+<!-- ── COLLECTION ── -->
+<section class="section" id="collection">
+  <div class="section-head">
+    <div>
+      <p class="label">The Art</p>
+      <h2 class="section-title">Collection</h2>
+    </div>
+    <a href="https://magiceden.us/marketplace/degods" target="_blank" class="section-link">View all on Magic Eden →</a>
+  </div>
+  <div class="nft-grid" id="nftGrid"></div>
+</section>
+
+<!-- ── MANIFESTO ── -->
+<div class="manifesto" id="manifesto">
+  <div class="manifesto-text">
+    <p class="label">The Mission</p>
+    <p class="manifesto-quote">"Do Everything<br>Great or Die."</p>
+    <div class="manifesto-body">
+      <p><strong>DeGods is not a JPEG.</strong> It's a global movement. Made in Los Angeles in 2021 — minted at 3 SOL, all 10,000 sold out in 7 seconds.</p>
+      <p>Holders have built businesses, launched projects, and created communities. We've given away a Tesla. Bought a basketball team. Threw a 3-day mansion party. Our roadmap looks like a 5-year-old drew it.</p>
+      <p>We tried some shit. We learned some shit. <strong>Now we're trying some new shit.</strong></p>
+    </div>
+    <div class="manifesto-actions">
+      <a href="https://discord.gg/degods" target="_blank" class="btn">Join Discord</a>
+      <a href="https://magiceden.us/marketplace/degods" target="_blank" class="btn btn-ghost">Buy NFT</a>
+    </div>
+  </div>
+  <div class="manifesto-img-grid" id="manifestoGrid"></div>
+</div>
+
+<!-- ── TOKEN ── -->
+<section class="token-section" id="token">
+  <div>
+    <p class="label">The Token</p>
+    <div class="token-ticker">$DEGOD</div>
+    <p class="token-desc">Convert your DeGod NFT to earn $DEGOD. The token powering the ecosystem — from staking to exclusive access and community governance.</p>
+    <div class="token-actions">
+      <a href="https://degods.com" target="_blank" class="btn">Buy $DEGOD</a>
+      <button class="btn btn-ghost">Convert NFT →</button>
+    </div>
+    <p class="token-ca-label">Contract Address</p>
+    <div class="token-ca" id="caBox" onclick="copyCA()" title="Click to copy">
+      xxxxxxxxxxxxxxxxxxxx
+      <span class="token-ca-hint" id="caHint">click to copy</span>
+    </div>
+  </div>
+  <div class="token-features">
+    <div class="token-feat">
+      <span class="feat-num">01</span>
+      <div>
+        <p class="feat-title">NFT → Token Conversion</p>
+        <p class="feat-body">Convert your DeGod NFT directly into $DEGOD tokens. Fully reversible. No middleman.</p>
+      </div>
+    </div>
+    <div class="token-feat">
+      <span class="feat-num">02</span>
+      <div>
+        <p class="feat-title">Community Governance</p>
+        <p class="feat-body">$DEGOD holders vote on treasury decisions, experiments, and the future of the collection.</p>
+      </div>
+    </div>
+    <div class="token-feat">
+      <span class="feat-num">03</span>
+      <div>
+        <p class="feat-title">Exclusive Access</p>
+        <p class="feat-body">Token-gated events, merch drops, and de/cap trading community — holders only.</p>
+      </div>
+    </div>
+    <div class="token-feat">
+      <span class="feat-num">04</span>
+      <div>
+        <p class="feat-title">Multi-Chain</p>
+        <p class="feat-body">Solana native. Bridge to Ethereum. One token. Every chain that matters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMMUNITY ── -->
+<section class="community" id="community">
+  <p class="label">The Community</p>
+  <h2 class="community-title">Join<br>The Army</h2>
+  <p class="community-sub">10,000 gods. Every city. One community.</p>
+  <div class="community-btns">
+    <a href="https://discord.gg/degods" target="_blank" class="btn solid">Join Discord</a>
+    <a href="https://x.com/DeGodsNFT" target="_blank" class="btn">Follow on Twitter</a>
+    <a href="https://magiceden.us/marketplace/degods" target="_blank" class="btn">Buy on Magic Eden</a>
+  </div>
+</section>
+
+<!-- ── PRESS ── -->
+<div class="press">
+  <p class="press-label">As Seen In</p>
+  <div class="press-logos">
+    <span class="press-item">Forbes</span>
+    <span class="press-item">TechCrunch</span>
+    <span class="press-item">Decrypt</span>
+    <span class="press-item">CoinTelegraph</span>
+    <span class="press-item">CryptoNews</span>
+    <span class="press-item">F1</span>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <p class="footer-brand-name">DeGods</p>
+      <p class="footer-brand-tag">Do Everything Great or Die.<br>Los Angeles, CA — Est. 2021</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Collection</h4>
+        <a href="https://magiceden.us/marketplace/degods" target="_blank">Buy on Magic Eden</a>
+        <a href="https://degods.com/gallery" target="_blank">Gallery</a>
+        <a href="https://degods.com/experiments" target="_blank">Experiments</a>
+        <a href="https://degods.com/dusties" target="_blank">Dusties 2.0</a>
+        <a href="https://merch.de.xyz" target="_blank">Merch Shop</a>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <a href="https://discord.gg/degods" target="_blank">Discord</a>
+        <a href="https://x.com/DeGodsNFT" target="_blank">Twitter / X</a>
+        <a href="https://degods.com/map" target="_blank">Global Map</a>
+        <a href="https://t.me/decapPortal" target="_blank">de/cap Telegram</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="https://degods.com/memecoins" target="_blank">Memecoin Guide</a>
+        <a href="https://degods.com" target="_blank">Brand Kit</a>
+        <a href="https://degods.com" target="_blank">Memes</a>
+        <a href="https://degods.com/finder" target="_blank">Finder / Profiles</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2021–2026 DeLabs. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="https://x.com/DeGodsNFT" target="_blank">Twitter</a>
+      <a href="https://discord.gg/degods" target="_blank">Discord</a>
+      <a href="https://magiceden.us/marketplace/degods" target="_blank">Magic Eden</a>
+      <a href="https://degods.com" target="_blank">degods.com</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+   JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+const CDN = 'https://powered.by.dustlabs.com/cdn-cgi/image/width=480/https://metadata.degods.com/g/';
+const FALLBACK = 'https://degods.com/images/landing/the-art.png';
+
+// ── helpers ──
+function rnd(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+function flt(a,b){ return +(Math.random()*(b-a)+a).toFixed(1); }
+function pad(n)  { return String(n).padStart(4,'0'); }
+
+// ── generate NFT dataset ──
+const POOL_SIZE = 60;
+const usedIds = new Set();
+const nfts = [];
+const types = ['DeGod','DeadGod','Warrior','Angel'];
+while(nfts.length < POOL_SIZE){
+  const id = rnd(0,9999);
+  if(usedIds.has(id)) continue;
+  usedIds.add(id);
+  nfts.push({
+    id, num:pad(id),
+    price: flt(7,180),
+    rare: Math.random()<.1,
+    type: types[rnd(0,types.length-1)],
+  });
+}
+nfts.sort((a,b)=>a.price-b.price);
+
+// ── HERO GRID ──
+function buildHeroGrid(){
+  const el = document.getElementById('heroGrid');
+  const heroIds = nfts.slice(0,9).map(n=>n.id);
+  heroIds.forEach((id,i)=>{
+    const div = document.createElement('div');
+    div.className='hero-nft';
+    div.innerHTML=`
+      <img src="${CDN}${id}.png" alt="DeGod #${pad(id)}" loading="${i<3?'eager':'lazy'}"
+           onerror="this.src='${FALLBACK}'"/>
+      <span class="hero-nft-id">#${pad(id)}</span>`;
+    el.appendChild(div);
+  });
+}
+
+// ── MARQUEE ──
+function buildMarquee(){
+  const items = ['DeGods','10,000 NFTs','Do Everything Great','$DEGOD Token','Magic Eden','Or Die','Solana + Ethereum','DeLabs'];
+  const el = document.getElementById('marquee');
+  let html = '';
+  [...items,...items].forEach(t=>{
+    html+=`<span>${t}</span><span class="hi">·</span>`;
+  });
+  el.innerHTML = html;
+}
+
+// ── STRIP ──
+function buildStrip(){
+  const el = document.getElementById('stripTrack');
+  const stripIds = nfts.slice(9,29).map(n=>n.id);
+  const doubled = [...stripIds,...stripIds];
+  doubled.forEach(id=>{
+    const div=document.createElement('div');
+    div.className='strip-item';
+    div.onclick=()=>window.open('https://magiceden.us/marketplace/degods','_blank');
+    div.innerHTML=`<img src="${CDN}${id}.png" alt="DeGod #${pad(id)}" loading="lazy" onerror="this.src='${FALLBACK}'"/>`;
+    el.appendChild(div);
+  });
+}
+
+// ── NFT CARD ──
+function makeCard(nft){
+  const card=document.createElement('div');
+  card.className='nft-card';
+  card.onclick=()=>window.open(`https://magiceden.us/item-details/solana/degods/${nft.id}`,'_blank');
+  card.innerHTML=`
+    <div class="nft-img-wrap">
+      <div class="nft-skel" id="sk${nft.id}"></div>
+      <img src="${CDN}${nft.id}.png" alt="DeGod #${nft.num}" loading="lazy"
+           onload="const s=document.getElementById('sk${nft.id}');if(s)s.remove();"
+           onerror="this.src='${FALLBACK}'"/>
+      ${nft.rare?'<span class="nft-badge rare">Rare</span>':''}
+      <span class="nft-id-tag">#${nft.num}</span>
+    </div>
+    <div class="nft-body">
+      <p class="nft-meta">${nft.type}</p>
+      <p class="nft-name">DeGod #${nft.num}</p>
+      <div class="nft-footer">
+        <span class="nft-price">${nft.price}<small>SOL</small></span>
+        <button class="nft-buy-btn" onclick="event.stopPropagation();window.open('https://magiceden.us/item-details/solana/degods/${nft.id}','_blank')">Buy</button>
+      </div>
+    </div>`;
+  return card;
+}
+
+// ── COLLECTION GRID ──
+function buildGrid(){
+  const el=document.getElementById('nftGrid');
+  nfts.slice(0,24).forEach(n=>el.appendChild(makeCard(n)));
+}
+
+// ── MANIFESTO GRID ──
+function buildManifestoGrid(){
+  const el=document.getElementById('manifestoGrid');
+  nfts.slice(24,28).forEach(n=>{
+    const div=document.createElement('div');
+    div.className='manifesto-img-cell';
+    div.innerHTML=`<img src="${CDN}${n.id}.png" alt="DeGod #${n.num}" loading="lazy" onerror="this.src='${FALLBACK}'"/>`;
+    el.appendChild(div);
+  });
+}
+
+// ── COPY CA ──
+function copyCA(){
+  const ca='xxxxxxxxxxxxxxxxxxxx';
+  navigator.clipboard.writeText(ca).then(()=>{
+    const h=document.getElementById('caHint');
+    h.textContent='copied!';
+    h.style.color='var(--red)';
+    setTimeout(()=>{ h.textContent='click to copy'; h.style.color=''; },2000);
+  });
+}
+
+// ── MOBILE MENU ──
+const burger=document.getElementById('burger');
+const mm=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>{
+  burger.classList.toggle('open');
+  mm.classList.toggle('open');
+});
+function closeMM(){
+  burger.classList.remove('open');
+  mm.classList.remove('open');
+}
+
+// ── INIT ──
+buildHeroGrid();
+buildMarquee();
+buildStrip();
+buildGrid();
+buildManifestoGrid();
+</script>
+</body>
+</html>
